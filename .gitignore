@@ -1,0 +1,15 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+# Secrets
+*.tfvars
+*.tfvars.json
+.env
+.env.*
+
+# Operating system
+.DS_Store
+Thumbs.db
