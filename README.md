@@ -1,40 +1,70 @@
 # AWS Secure Infrastructure ☁️
 
-Estoy construyendo este proyecto para aprender a trabajar con AWS y Terraform de forma práctica, desde cero.
+Laboratorio práctico para aprender **AWS, Terraform, Infrastructure as Code (IaC) y Cloud Security** mediante la construcción progresiva de una infraestructura segura, automatizada y documentada.
 
-Quiero entender cómo se diseña una infraestructura cloud, cómo se automatiza y qué medidas de seguridad puedo aplicar para que esté bien configurada desde el principio. La idea es ir ampliándolo poco a poco, probando cosas y documentando lo que voy aprendiendo por el camino.
+El objetivo es comprender cómo se diseña, despliega y protege una infraestructura cloud, aplicando buenas prácticas desde el principio y documentando las decisiones técnicas, pruebas y errores encontrados.
 
-## 🎯 ¿Qué quiero aprender?
+## 🎯 Objetivos de aprendizaje
 
-- Crear y gestionar infraestructura con Terraform (IaC).
-- Entender mejor AWS, las redes cloud y los permisos IAM.
-- Aplicar buenas prácticas de seguridad desde el diseño.
-- Automatizar tareas y comprobaciones.
-- Aprender a detectar errores de configuración y corregirlos.
+- Diseñar y gestionar infraestructura con Terraform (IaC).
+- Comprender redes de AWS, IAM y control de acceso.
+- Aplicar el principio de mínimo privilegio y otras buenas prácticas de seguridad.
+- Automatizar validaciones y tareas repetitivas.
+- Detectar y corregir configuraciones inseguras.
+- Incorporar controles de seguridad en un flujo CI/CD.
 
 ## 🛠️ Tecnologías
 
-- **AWS** — infraestructura en la nube.
-- **Terraform** — infraestructura como código.
-- **Git y GitHub** — control de versiones.
-- **GitHub Actions** — automatización del flujo de trabajo.
-- **Checkov** — análisis de seguridad de la infraestructura como código.
+- **AWS:** infraestructura y servicios cloud.
+- **Terraform:** definición y gestión de infraestructura como código.
+- **Git y GitHub:** control de versiones y documentación.
+- **GitHub Actions:** automatización del flujo de trabajo.
+- **Checkov:** análisis estático de seguridad para infraestructura como código.
 
-## 🚧 Progreso
+## 📍 Estado actual
 
-Estoy empezando por preparar el entorno, organizar el repositorio y aprender a trabajar con Git y Terraform correctamente.
+**Fase 1 — Preparación del entorno**
 
-A partir de aquí, iré añadiendo recursos de AWS, controles de seguridad y automatizaciones según avance el proyecto.
+- [x] Instalar y verificar Terraform, AWS CLI y Git.
+- [x] Inicializar el proyecto con `terraform init`.
+- [x] Validar la configuración con `terraform validate`.
+- [x] Configurar Git y sincronizar el repositorio con GitHub.
+- [x] Versionar el archivo `.terraform.lock.hcl`.
+- [ ] Configurar y verificar el acceso a AWS.
 
-## 📌 Próximos pasos
+Todavía no se han desplegado recursos de infraestructura en AWS.
 
-- [ ] Preparar el entorno de Terraform.
-- [ ] Crear mi primera infraestructura en AWS.
-- [ ] Configurar redes y permisos con el principio de mínimo privilegio.
-- [ ] Añadir comprobaciones de seguridad con Checkov.
-- [ ] Automatizar validaciones con GitHub Actions.
-- [ ] Documentar la arquitectura, las pruebas y los errores que vaya resolviendo.
+## 🗺️ Roadmap
 
-## 💡 Objetivo
+### Fase 1 — Entorno y fundamentos
+- [x] Preparar la configuración inicial de Terraform.
+- [x] Organizar el repositorio y el control de versiones.
+- [ ] Configurar autenticación segura con AWS.
 
-Convertir este repositorio en mi laboratorio práctico para aprender Cloud Engineering, Infrastructure as Code y Cloud Security, entendiendo cómo funciona cada pieza y no limitándome a copiar configuraciones.
+### Fase 2 — Primera infraestructura
+- [ ] Diseñar una arquitectura inicial de bajo coste.
+- [ ] Definir recursos con Terraform.
+- [ ] Revisar permisos, exposición de red y posibles costes.
+- [ ] Validar los cambios antes de desplegarlos.
+
+### Fase 3 — Seguridad
+- [ ] Aplicar el principio de mínimo privilegio.
+- [ ] Incorporar análisis con Checkov.
+- [ ] Documentar riesgos, controles y decisiones de diseño.
+
+### Fase 4 — Automatización
+- [ ] Crear un workflow de GitHub Actions.
+- [ ] Automatizar `terraform fmt`, `terraform validate` y los análisis de seguridad.
+- [ ] Documentar las pruebas y los resultados.
+
+## 🔐 Principios de seguridad
+
+- No guardar credenciales ni secretos en el repositorio.
+- Evitar permisos excesivos.
+- Revisar los cambios antes de desplegar infraestructura.
+- Controlar el estado de Terraform y los posibles costes.
+- Documentar los riesgos y las medidas de mitigación.
+
+## 💡 Objetivo final
+
+Construir un laboratorio reproducible que demuestre conocimientos prácticos de **Cloud Engineering, Infrastructure as Code, automatización y Cloud Security**, entendiendo cada componente y justificando las decisiones técnicas.
