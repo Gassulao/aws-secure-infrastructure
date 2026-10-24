@@ -131,3 +131,29 @@ resource "aws_vpc_security_group_ingress_rule" "web_https" {
   to_port           = 443
   cidr_ipv4         = "0.0.0.0/0"
 }
+
+resource "aws_instance" "web" {
+  ami                    = "ami-0445442ed20a2c6f8"
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public.id
+  vpc_security_group_ids = [aws_security_group.web.id]
+
+  root_block_device {
+    volume_size           = 8
+    volume_type           = "gp3"
+    encrypted             = true
+    delete_on_termination = true
+  }
+
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
+
+  tags = {
+    Name        = "terraform-secure-lab-web"
+    Environment = "lab"
+    ManagedBy   = "Terraform"
+    Tier        = "web"
+  }
+}
