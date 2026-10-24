@@ -101,3 +101,33 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private.id
   route_table_id = aws_route_table.private.id
 }
+
+resource "aws_security_group" "web" {
+  name        = "terraform-secure-lab-web-sg"
+  description = "Security group for web tier"
+  vpc_id      = aws_vpc.lab.id
+
+  tags = {
+    Name        = "terraform-secure-lab-web-sg"
+    Environment = "lab"
+    ManagedBy   = "Terraform"
+    Tier        = "web"
+  }
+}
+resource "aws_vpc_security_group_ingress_rule" "web_http" {
+  security_group_id = aws_security_group.web.id
+  description       = "Allow HTTP traffic"
+  ip_protocol       = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_ipv4         = "0.0.0.0/0"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "web_https" {
+  security_group_id = aws_security_group.web.id
+  description       = "Allow HTTPS traffic"
+  ip_protocol       = "tcp"
+  from_port         = 443
+  to_port           = 443
+  cidr_ipv4         = "0.0.0.0/0"
+}
