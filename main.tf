@@ -15,14 +15,9 @@ provider "aws" {
   profile = "terraform-lab"
 }
 
-variable "aws_region" {
-  description = "AWS region where the infrastructure will be deployed"
-  type        = string
-  default     = "eu-west-1"
-}
 
 resource "aws_vpc" "lab" {
-  cidr_block           = "10.20.0.0/16"
+  cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
 
@@ -35,7 +30,7 @@ resource "aws_vpc" "lab" {
 
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.lab.id
-  cidr_block              = "10.20.1.0/24"
+  cidr_block              = var.public_subnet_cidr
   availability_zone       = "eu-west-1a"
   map_public_ip_on_launch = true
 
@@ -49,7 +44,7 @@ resource "aws_subnet" "public" {
 
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.lab.id
-  cidr_block        = "10.20.2.0/24"
+  cidr_block        = var.private_subnet_cidr
   availability_zone = "eu-west-1a"
 
   tags = {
