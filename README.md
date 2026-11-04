@@ -76,40 +76,41 @@ VS Code --> Git --> GitHub --> GitHub Actions
 
 ---
 
-## 📍 Estado actual
+### 📍 Estado actual
 
-**Fase 0 — Cimientos de la cuenta (en curso).**
+**Fase 0 completada. Fase A (infraestructura base) construida; pendiente retirar la antigua.**
 
-Estoy reconstruyendo el proyecto desde cero para repasar cada concepto con calma, en una rama separada (`rebuild/v2`) para no tocar la versión anterior de `main`.
+Estoy reconstruyendo el proyecto desde cero para repasar cada concepto con calma, en una rama separada (`rebuild/v2`) para no tocar la versión anterior de `main`. Toda la infraestructura nueva está definida en Terraform, con el estado en S3.
 
 Hecho hasta ahora:
 
-- [x] Rama de trabajo `rebuild/v2` creada.
-- [x] Identidad de AWS CLI comprobada (cuenta y usuario correctos).
-- [x] Versiones de Terraform y AWS CLI verificadas.
+- [x] Root protegido con MFA y presupuesto mensual con alertas.
+- [x] Acceso humano con usuario sin permisos + MFA, y roles asumidos con credenciales temporales.
+- [x] Roles por función: `lab-terraform-deployer` (construye), `lab-admin` (administra IAM) y `lab-ssm-operator` (entrar a las máquinas; permisos pendientes).
+- [x] Estado de Terraform en S3 con versionado, cifrado y bloqueo nativo.
+- [x] Red: VPC, subredes pública y privada, Internet Gateway y tablas de rutas.
+- [x] Security Group web (80/443, sin SSH).
+- [x] Rol e instance profile de la EC2 en código, con SSM.
+- [x] EC2 con disco cifrado, IMDSv2 obligatorio y acceso solo por Session Manager.
 
-En esta fase voy a preparar:
+Pendiente de esta fase:
 
-- [ ] Protección del usuario root (MFA) y presupuesto con alertas de coste.
-- [ ] Acceso humano a la cuenta con credenciales temporales.
-- [ ] Identidad con permisos mínimos para ejecutar Terraform.
-
+- [ ] Migrar la página web al repositorio y desplegarla en la nueva instancia.
+- [ ] Retirar la infraestructura antigua una vez comprobado lo nuevo.
 ---
 
-## 🗺️ Roadmap
-
 ### Fase 0 — Cimientos de la cuenta
-- [ ] Root protegido con MFA.
-- [ ] Presupuesto y alertas de coste.
-- [ ] Acceso humano con credenciales temporales.
-- [ ] Identidad de Terraform con mínimo privilegio.
+- [x] Root protegido con MFA.
+- [x] Presupuesto y alertas de coste.
+- [x] Acceso humano con credenciales temporales.
+- [x] Identidad de Terraform con mínimo privilegio.
 
 ### Fase A — Terraform y AWS base
-- [ ] Estado remoto en S3 con bloqueo.
-- [ ] Red: VPC, subredes pública y privada, Internet Gateway, rutas.
-- [ ] Security Group web (sin SSH).
-- [ ] IAM, rol e instance profile definidos en código.
-- [ ] Instancia EC2 con disco cifrado e IMDSv2 obligatorio.
+- [x] Estado remoto en S3 con bloqueo.
+- [x] Red: VPC, subredes pública y privada, Internet Gateway, rutas.
+- [x] Security Group web (sin SSH).
+- [x] IAM, rol e instance profile definidos en código.
+- [x] Instancia EC2 con disco cifrado e IMDSv2 obligatorio.
 
 ### Fase B — Aplicación y despliegue
 - [ ] Nginx y página web desplegadas desde el repositorio.
