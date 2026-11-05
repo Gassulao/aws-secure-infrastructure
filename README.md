@@ -85,14 +85,17 @@ Hecho hasta ahora:
  
 - [x] Root protegido con MFA y presupuesto mensual con alertas.
 - [x] Acceso humano con usuario sin permisos + MFA, y roles asumidos con credenciales temporales.
-- [x] Roles por función: `lab-terraform-deployer` (construye), `lab-admin` (administra IAM) y `lab-ssm-operator` (entrar a las máquinas; permisos pendientes).
+- [x] Roles por función: `lab-terraform-deployer` (construye), `lab-admin` (administra IAM) y `lab-ssm-operator` (entrar a las máquinas por Session Manager).
 - [x] Estado de Terraform en S3 con versionado, cifrado y bloqueo nativo.
 - [x] Red: VPC, subredes pública y privada, Internet Gateway y tablas de rutas.
 - [x] Security Group web (80/443, sin SSH).
 - [x] Rol e instance profile de la EC2 en código, con SSM.
 - [x] EC2 con disco cifrado, IMDSv2 obligatorio y acceso solo por Session Manager.
+- [x] Primera sesión por Session Manager con el rol `lab-ssm-operator`, sin SSH ni claves, y cierre de sesiones propias verificado.
+- [x] Políticas IAM de los roles guardadas en `policies/`, con historial en Git.
 Pendiente de esta fase:
  
+- [ ] Pasar las políticas IAM de `policies/` a Terraform.
 - [ ] Migrar la página web al repositorio y desplegarla en la nueva instancia.
 - [ ] Retirar la infraestructura antigua una vez comprobado lo nuevo.
 ---
@@ -135,7 +138,9 @@ Pendiente de esta fase:
 - **Reconstruir desde cero** en una rama aparte, para repasar todos los conceptos y dejar un único origen de verdad (el código).
 - **Estado de Terraform remoto en S3**, no en un ordenador local, porque trabajo desde más de un equipo.
 - **IAM en código** desde el principio, con mínimo privilegio.
-- **Sin SSH abierto**: la administración se hará con Systems Manager.
+- **Sin SSH abierto**: la administración se hace con Systems Manager.
+- **Roles por función**: quien construye (`lab-terraform-deployer`), quien administra IAM (`lab-admin`) y quien entra a las máquinas (`lab-ssm-operator`) son roles distintos, todos con MFA.
+- **Políticas versionadas**: las políticas IAM viven en `policies/` y se prueban de verdad antes de darlas por buenas.
 - **Sin credenciales permanentes** en CI/CD: autenticación por OIDC.
 - **Regla de trabajo**: leer siempre `terraform plan` antes de aplicar cualquier cambio.
 ---
@@ -153,9 +158,8 @@ El laboratorio usa créditos de AWS, así que controlo el gasto desde el princip
  
 - No se guardan credenciales, claves ni secretos en el repositorio.
 - El estado de Terraform nunca se sube a Git.
-- Permisos de mínimo privilegio; nada de `AdministratorAccess` como atajo.
+- Permisos de mínimo privilegio. `AdministratorAccess` solo existe en el rol `lab-admin`, con MFA, y no se usa como atajo.
 - Solo se abren los puertos imprescindibles.
 ---
  
 *Construyendo mi propia infraestructura cloud, paso a paso.*
- 
