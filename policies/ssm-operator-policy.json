@@ -1,0 +1,45 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListInstancesAndSessions",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ssm:DescribeInstanceInformation",
+        "ssm:GetConnectionStatus",
+        "ssm:DescribeSessions"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "StartSessionOnProjectInstances",
+      "Effect": "Allow",
+      "Action": "ssm:StartSession",
+      "Resource": "arn:aws:ec2:eu-west-1:172155958881:instance/*",
+      "Condition": {
+        "StringEquals": {
+          "ssm:resourceTag/Project": "aws-secure-infrastructure"
+        }
+      }
+    },
+    {
+      "Sid": "UseShellSessionDocument",
+      "Effect": "Allow",
+      "Action": "ssm:StartSession",
+     "Resource": "arn:aws:ssm:eu-west-1:172155958881:document/SSM-SessionManagerRunShell"
+    },
+    {
+      "Sid": "EndOwnSessions",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:TerminateSession",
+        "ssm:ResumeSession"
+      ],
+"Resource": "arn:aws:ssm:*:*:session/*",
+"Condition": {
+  "StringLike": { "ssm:resourceTag/aws:ssmmessages:session-id": "${aws:userid}" }
+}
+    }
+  ]
+}
