@@ -79,7 +79,7 @@ VS Code --> Git --> GitHub --> GitHub Actions
  
 **Fases 0 y A completadas. Fase B (aplicación y despliegue) en curso.**
  
-Estoy reconstruyendo el proyecto desde cero para repasar cada concepto con calma, en una rama separada (`rebuild/v2`) para no tocar la versión anterior de `main`. Toda la infraestructura nueva está definida en Terraform, con el estado en S3.
+Reconstruí el proyecto desde cero para repasar cada concepto con calma. La versión anterior se conserva en la rama `legacy-v1`. Toda la infraestructura nueva está definida en Terraform, con el estado en S3.
  
 Hecho hasta ahora:
  
