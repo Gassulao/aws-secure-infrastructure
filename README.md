@@ -77,7 +77,7 @@ VS Code --> Git --> GitHub --> GitHub Actions
  
 ## 📍 Estado actual
  
-**Fase 0 completada. Fase A (infraestructura base) construida; pendiente retirar la antigua.**
+**Fases 0 y A completadas. Fase B (aplicación y despliegue) en curso.**
  
 Estoy reconstruyendo el proyecto desde cero para repasar cada concepto con calma, en una rama separada (`rebuild/v2`) para no tocar la versión anterior de `main`. Toda la infraestructura nueva está definida en Terraform, con el estado en S3.
  
@@ -93,11 +93,26 @@ Hecho hasta ahora:
 - [x] EC2 con disco cifrado, IMDSv2 obligatorio y acceso solo por Session Manager.
 - [x] Primera sesión por Session Manager con el rol `lab-ssm-operator`, sin SSH ni claves, y cierre de sesiones propias verificado.
 - [x] Políticas IAM de los roles guardadas en `policies/`, con historial en Git.
+- [x] Infraestructura antigua retirada por completo (EC2, red, roles, usuario, grupo, políticas y bucket), comprobando que no quedan recursos que sigan cobrando.
+- [x] Servicio de estado en FastAPI (`/health`, `/version`) gestionado con systemd y publicado detrás de Nginx como reverse proxy, desplegado desde el repositorio.
+- [x] Flujo de trabajo con ramas y Pull Requests: `main` solo recibe cambios fusionados; el proyecto anterior se conserva en la rama `legacy-v1`.
 Pendiente de esta fase:
  
 - [ ] Pasar las políticas IAM de `policies/` a Terraform.
-- [ ] Migrar la página web al repositorio y desplegarla en la nueva instancia.
-- [ ] Retirar la infraestructura antigua una vez comprobado lo nuevo.
+- [ ] Página web definitiva (panel de estado) servida por Nginx desde el repositorio.
+- [ ] Automatizar el despliegue del servicio y de Nginx (Ansible y pipeline).
+- [ ] Endurecer el servicio: usuario sin privilegios y opciones de aislamiento de systemd.
+---
+ 
+## 📁 Estructura del repositorio
+ 
+| Carpeta | Contenido |
+|---|---|
+| `terraform/` | Infraestructura como código: red, Security Group, IAM de la EC2 e instancia |
+| `policies/` | Políticas IAM de los roles (trust y permisos) |
+| `app/` | Servicio de estado en FastAPI |
+| `deploy/` | Unidad de systemd y configuración de Nginx del servicio |
+ 
 ---
  
 ## 🗺️ Roadmap
@@ -113,9 +128,11 @@ Pendiente de esta fase:
 - [x] Security Group web (sin SSH).
 - [x] IAM, rol e instance profile definidos en código.
 - [x] Instancia EC2 con disco cifrado e IMDSv2 obligatorio.
+- [x] Retirada de la infraestructura antigua.
 ### Fase B — Aplicación y despliegue
-- [ ] Nginx y página web desplegadas desde el repositorio.
-- [ ] Flujo de trabajo con ramas y pull requests.
+- [x] Servicio de estado detrás de Nginx como reverse proxy, con systemd.
+- [x] Flujo de trabajo con ramas y pull requests.
+- [ ] Página web desplegada desde el repositorio.
 - [ ] GitHub Actions con autenticación OIDC.
 ### Fase C — Ansible
 - [ ] Configuración de Nginx, usuarios y hardening como código.
@@ -141,6 +158,8 @@ Pendiente de esta fase:
 - **Sin SSH abierto**: la administración se hace con Systems Manager.
 - **Roles por función**: quien construye (`lab-terraform-deployer`), quien administra IAM (`lab-admin`) y quien entra a las máquinas (`lab-ssm-operator`) son roles distintos, todos con MFA.
 - **Políticas versionadas**: las políticas IAM viven en `policies/` y se prueban de verdad antes de darlas por buenas.
+- **Ramas y Pull Requests**: ningún cambio entra en `main` directamente; cada trabajo va en su rama y se fusiona con una PR.
+- **Reverse proxy**: la aplicación solo escucha en local y Nginx es la única puerta pública.
 - **Sin credenciales permanentes** en CI/CD: autenticación por OIDC.
 - **Regla de trabajo**: leer siempre `terraform plan` antes de aplicar cualquier cambio.
 ---
@@ -163,3 +182,4 @@ El laboratorio usa créditos de AWS, así que controlo el gasto desde el princip
 ---
  
 *Construyendo mi propia infraestructura cloud, paso a paso.*
+ 
