@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Status Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+
+  <main class="shell">
+    <header class="topbar glass">
+      <div class="brand">
+        <span class="logo">◈</span>
+        <div>
+          <h1>Status Dashboard</h1>
+          <p>Nginx · FastAPI · systemd</p>
+        </div>
+      </div>
+      <div class="controls">
+        <span class="chip" id="last-update">Sin datos</span>
+        <label class="switch">
+          <input type="checkbox" id="auto" checked>
+          <span class="slider"></span>
+          <span class="switch-label">Auto 5 s</span>
+        </label>
+        <button class="btn" id="refresh" type="button">↻ Actualizar</button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card glass hero">
+        <h2>Estado del servicio</h2>
+        <div class="hero-body">
+          <div class="ring" id="ring">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <span class="ring-icon" id="ring-icon">…</span>
+          </div>
+          <div>
+            <p class="big" id="status-text">Comprobando</p>
+            <p class="muted" id="status-sub">GET /api/health</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card glass">
+        <h2>Versión</h2>
+        <p class="big mono" id="version">—</p>
+        <p class="muted">GET /api/version</p>
+      </article>
+
+      <article class="card glass">
+        <h2>Uptime</h2>
+        <p class="big mono" id="uptime">—</p>
+        <p class="muted">desde el último arranque</p>
+      </article>
+
+      <article class="card glass">
+        <h2>Latencia</h2>
+        <p class="big mono"><span id="latency">—</span><small> ms</small></p>
+        <p class="muted">media: <span id="latency-avg">—</span> ms</p>
+      </article>
+
+      <article class="card glass wide">
+        <h2>Latencia de /api/health <small class="muted">(últimas 30 comprobaciones)</small></h2>
+        <svg id="spark" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="Gráfico de latencia"></svg>
+      </article>
+
+      <article class="card glass">
+        <h2>Nginx</h2>
+        <ul class="kv">
+          <li><span>Conexiones activas</span><b id="ng-active">—</b></li>
+          <li><span>Peticiones totales</span><b id="ng-requests">—</b></li>
+          <li><span>Leyendo / Escribiendo</span><b id="ng-rw">—</b></li>
+        </ul>
+        <p class="muted" id="ng-note">GET /nginx_status</p>
+      </article>
+
+      <article class="card glass span3">
+        <h2>Registro de comprobaciones</h2>
+        <ul class="log" id="log"></ul>
+      </article>
+
+      <article class="card glass">
+        <h2>Cadena de petición</h2>
+        <ol class="flow">
+          <li>Navegador</li>
+          <li>Nginx <small>:80</small></li>
+          <li>FastAPI <small>127.0.0.1:8000</small></li>
+        </ol>
+      </article>
+    </section>
+
+    <footer class="foot">aws-secure-infrastructure · laboratorio personal</footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
