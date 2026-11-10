@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,28 +57,80 @@
       </article>
 
       <article class="card glass">
-        <h2>Uptime</h2>
+        <h2>Uptime de aplicación</h2>
         <p class="big mono" id="uptime">—</p>
-        <p class="muted">desde el último arranque</p>
+        <p class="muted">desde el inicio de FastAPI</p>
+      </article>
+
+      <article class="card glass">
+        <h2>Uptime del sistema</h2>
+        <p class="big mono" id="system-uptime">—</p>
+        <p class="muted">desde el arranque del sistema operativo</p>
+      </article>
+
+      <article class="card glass">
+        <h2>CPU</h2>
+        <p class="big mono">
+          <span id="cpu-usage">—</span>
+        </p>
+        <p class="muted">uso del procesador</p>
+      </article>
+
+      <article class="card glass">
+        <h2>Memoria RAM</h2>
+        <p class="big mono">
+          <span id="ram-usage">—</span>
+        </p>
+        <p class="muted" id="ram-detail">—</p>
+      </article>
+
+      <article class="card glass">
+        <h2>Almacenamiento</h2>
+        <p class="big mono">
+          <span id="disk-usage">—</span>
+        </p>
+        <p class="muted" id="disk-detail">—</p>
       </article>
 
       <article class="card glass">
         <h2>Latencia</h2>
-        <p class="big mono"><span id="latency">—</span><small> ms</small></p>
-        <p class="muted">media: <span id="latency-avg">—</span> ms</p>
+        <p class="big mono">
+          <span id="latency">—</span><small> ms</small>
+        </p>
+        <p class="muted">
+          media: <span id="latency-avg">—</span> ms
+        </p>
       </article>
 
       <article class="card glass wide">
-        <h2>Latencia de /api/health <small class="muted">(últimas 30 comprobaciones)</small></h2>
-        <svg id="spark" viewBox="0 0 600 140" preserveAspectRatio="none" role="img" aria-label="Gráfico de latencia"></svg>
+        <h2>
+          Latencia de /api/health
+          <small class="muted">(últimas 30 comprobaciones)</small>
+        </h2>
+        <svg
+          id="spark"
+          viewBox="0 0 600 140"
+          preserveAspectRatio="none"
+          role="img"
+          aria-label="Gráfico de latencia">
+        </svg>
       </article>
 
       <article class="card glass">
         <h2>Nginx</h2>
         <ul class="kv">
-          <li><span>Conexiones activas</span><b id="ng-active">—</b></li>
-          <li><span>Peticiones totales</span><b id="ng-requests">—</b></li>
-          <li><span>Leyendo / Escribiendo</span><b id="ng-rw">—</b></li>
+          <li>
+            <span>Conexiones activas</span>
+            <b id="ng-active">—</b>
+          </li>
+          <li>
+            <span>Peticiones totales</span>
+            <b id="ng-requests">—</b>
+          </li>
+          <li>
+            <span>Leyendo / Escribiendo</span>
+            <b id="ng-rw">—</b>
+          </li>
         </ul>
         <p class="muted" id="ng-note">GET /nginx_status</p>
       </article>
@@ -97,7 +150,9 @@
       </article>
     </section>
 
-    <footer class="foot">aws-secure-infrastructure · laboratorio personal</footer>
+    <footer class="foot">
+      aws-secure-infrastructure · laboratorio personal
+    </footer>
   </main>
 
   <script src="app.js"></script>
